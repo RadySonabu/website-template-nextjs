@@ -22,7 +22,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-
+import Link from "next/link";
+import { Dashboard } from "@material-ui/icons";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		drawer: {
 			width: drawerWidth,
-			flexShrink: 0,
+			// flexShrink: 0,
 		},
 		drawerPaper: {
 			width: drawerWidth,
@@ -84,7 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export default function MyDrawer({ children }: any) {
+export default function Layout({ children }: any) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
@@ -145,32 +146,24 @@ export default function MyDrawer({ children }: any) {
 				</div>
 				<Divider />
 				<List>
-					{["Inbox", "Starred", "Send email", "Drafts"].map(
-						(text, index) => (
-							<ListItem button key={text}>
-								<ListItemIcon>
-									{index % 2 === 0 ? (
-										<InboxIcon />
-									) : (
-										<MailIcon />
-									)}
-								</ListItemIcon>
-								<ListItemText primary={text} />
-							</ListItem>
-						)
-					)}
+					<Link href="/">
+						<ListItem button>
+							<ListItemIcon>
+								<Dashboard />
+							</ListItemIcon>
+							<ListItemText primary="Dashboard" />
+						</ListItem>
+					</Link>
+					<Link href="/products">
+						<ListItem button>
+							<ListItemIcon>
+								<InboxIcon />
+							</ListItemIcon>
+							<ListItemText primary="Products" />
+						</ListItem>
+					</Link>
 				</List>
 				<Divider />
-				<List>
-					{["All mail", "Trash", "Spam"].map((text, index) => (
-						<ListItem button key={text}>
-							<ListItemIcon>
-								{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-							</ListItemIcon>
-							<ListItemText primary={text} />
-						</ListItem>
-					))}
-				</List>
 			</Drawer>
 			<main
 				className={clsx(classes.content, {
@@ -178,7 +171,14 @@ export default function MyDrawer({ children }: any) {
 				})}
 			>
 				<div className={classes.drawerHeader} />
-				{children}
+
+				<div
+				// className={clsx(classes.appBar, {
+				// 	[classes.appBarShift]: open,
+				// })}
+				>
+					<div>{children}</div>
+				</div>
 			</main>
 		</div>
 	);
